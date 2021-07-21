@@ -1,0 +1,21 @@
+def Kurtosis_Abalone(Dataframe):
+    """
+    Print number of predictors at a given Kurtosis cutoff
+    """
+    # Create lists for different skew levels.
+    No_Kurtosis, Moderate_Kurtosis, Severe_Kurtosis = ([] for i in range(3))
+    
+    # Assign each skew score to a list.
+    for i in range(len(Dataframe.loc[:, Dataframe.columns != 'Rings'].kurtosis(axis = 0))):
+        count = Dataframe.loc[:, Dataframe.columns != 'Rings'].kurtosis(axis = 0)[i]
+        if count < 3 and count > -3:
+            No_Kurtosis.append(count)
+        elif count > 3 and count < -3 or count < 7 and count > -7:
+            Moderate_Kurtosis.append(count)
+        else:
+            Severe_Kurtosis.append(count)
+
+    # Print skew scores for each level.
+    print('No Kurtosis:', len(No_Kurtosis))
+    print('Moderate Kurtosis:', len(Moderate_Kurtosis))
+    print('Severe Kurtosis:', len(Severe_Kurtosis))

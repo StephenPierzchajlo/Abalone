@@ -1,0 +1,38 @@
+def regression_function(X,y):
+    """
+    Calculates linear model and outputs: train/validate/test shape, MSE, R2, and adjusted R2.
+    """
+    # Split data into training and testing sets.
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 1)
+
+    # further divide the training data again to get a validation set.
+    #X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size = 0.25, random_state = 1) # 0.25 x 0.8 = 0.2
+    
+    # Print size of training, validation, and testing set for verification.
+    print('X_Train Shape =', round(X_train.shape[0]/4177 * 100),'%')
+    #print('X_Validate Shape =', round(X_val.shape[0]/4177 * 100),'%')
+    print('X_Test Shape =', round(X_test.shape[0]/4177 * 100),'%')
+    print('') # Add space.
+    
+    # Call linearRegression function from scikitlearn.
+    regr = linear_model.LinearRegression()
+    
+    # Fit regression model using predictor(s) (X_train) and dependent variable (y_train).
+    regr.fit(X_train, y_train)
+    
+    # Print coefficients.
+    print('Coefficients')
+    print(regr.coef_)
+    print('') # Add space.
+    
+    # Make predictions using the testing set
+    y_pred = regr.predict(X_test)
+    
+    # Print mean squared error
+    print('MSE =', mean_squared_error(y_test, y_pred))
+    
+    # Print coefficient of determination: 1 is perfect prediction
+    print('R2 =', r2_score(y_test, y_pred))
+    
+    # Print adjusted coefficent of determination (model steadily accrues coefficient-driven penalty, penalising complex models).
+    print('Adj_R2 =', (1 - (1 - r2_score(y_test, y_pred)) * ((X.shape[0] - 1) / (X.shape[0] - X.shape[1] - 1))))

@@ -1,0 +1,14 @@
+def calculate_residuals(model, features, label):
+    """
+    Creates predictions on the features with the model and calculates residuals
+    """
+    # vector of predicted response variables.
+    predictions = model.predict(features)
+    
+    # Dataframe plotting labels against model predictions.
+    df_results = pd.DataFrame({'Actual': label, 'Predicted': predictions})
+    
+    # Absolute difference between labels and predictions.
+    df_results['Residuals'] = abs(df_results['Actual']) - abs(df_results['Predicted'])
+    
+    return df_results

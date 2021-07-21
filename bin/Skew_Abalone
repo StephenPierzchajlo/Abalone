@@ -1,0 +1,29 @@
+def Skew_Abalone(Dataframe):
+    """
+    Print number of predictors at a given Skew cutoff
+    """
+    # Create lists for different skew levels.
+    No_Skew, Moderate_Skew, Severe_Skew = ([] for i in range(3))
+    
+    # Assign each skew score to a list.
+    for i in range(len(Dataframe.loc[:, Dataframe.columns != 'Rings'].skew(axis = 0))):
+        
+        count = Dataframe.loc[:, Dataframe.columns != 'Rings'].skew(axis = 0)[i]
+        
+        # Determine skew.
+        # No skew.
+        if count < 0.5 and count > -0.5:
+            No_Skew.append(count)
+        
+        # Moderate skew.
+        elif count > 0.5 and count < -0.5 or count < 1 and count > -1:
+            Moderate_Skew.append(count)
+        
+        # Severe skew.
+        else:
+            Severe_Skew.append(count)
+
+    # Print skew scores for each level.
+    print('No Skew:', len(No_Skew))
+    print('Moderate Skew:', len(Moderate_Skew))
+    print('Severe Skew:', len(Severe_Skew))

@@ -1,0 +1,6 @@
+def PolynomialRegression(degree = 2, **kwargs):
+    """
+    Create a pipeline for polynomail regression.
+    """
+    # Return polynomial pipeline.
+    return make_pipeline(PolynomialFeatures(degree), LinearRegression(**kwargs))

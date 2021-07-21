@@ -1,0 +1,42 @@
+def abalone_split(dataframe, split):
+    """
+    Splits dependent variable in 2 or 3 groups.
+    """
+    # Copy abalone dataframe.
+    abalone_two = abalone.copy()
+    
+    # Empty list.
+    Rings = []
+    
+    # Split by 2.
+    if split == 2:
+        # Perform mean split: Rings list stores 1 for abalone with more than 14.5 rings, and 0 otherwise.
+        for i in abalone_two['Rings']:
+            if i > 14.5:
+                Rings.append('1')
+            else:
+                Rings.append('0')
+   
+    # Split by 3.            
+    else:
+        for i in abalone_two['Rings']:
+            if i > 19.2:
+                Rings.append('2')
+            elif i > 9.6 and i < 19.2:
+                Rings.append('1') 
+            else:
+                Rings.append('0')
+                
+    # Replace total Rings column with mean-split Rings column.
+    abalone_two['Rings'] = Rings
+
+    # See how many of each their are.
+    abalone_two['Rings'].value_counts()
+    
+    # Return dataframe if split is 2 or 3.
+    if split == 2 or split == 3:
+        return(abalone_two)
+    
+    # Else, tell user to use split of 2 or 3.
+    else:
+        print("Can only split by 2 or 3. Please try again!")
